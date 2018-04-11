@@ -1,0 +1,65 @@
+ <link rel="icon" type="image/x-icon" href="/static/favicon.ico"></link>
+<div xmlns:th="http://www.thymeleaf.org">
+    <form id="login-form" class="form-inline" method="post" th:action="@{/login}">
+        <table class="table table-bordered" >
+            <tr>
+                <th>用户名</th>
+                <td><input type="text" class="form-control" name="username"/></td>
+            </tr>
+             <tr>
+                <th>密码</th>
+                <td><input type="text" class="form-control" name="password"/></td>
+            </tr>
+            <tr>
+                <td><button type="submit" class="btn btn-primary">登录</button></td>
+               <td  th:text="${msg}"></td>
+            </tr>
+        </table>
+    </form>
+
+    <script th:inline="javascript">
+        $('login-form').on('submit', function (e) {
+            $.ajax({
+                url: e.target.action,
+                type: 'POST',
+                data: $(e.target).serialize(),
+                success: function (result) {
+                    console.info(result);
+                    if (result.code == 200) {//成功
+                        window.location.href="device.html";
+                    } else {//失败
+                        var msg = result.message + '<br/>';
+                        if (result.data) {
+                            result.data.forEach(function (v) {
+                                msg += v.message + '<br/>';
+                            });
+                        }
+                        layer.msg(msg);
+                    }
+                }
+            });
+            return false;
+        })
+    </script>
+</div>
+
+
+<head xmlns:th="http://www.thymeleaf.org" th:fragment="header">
+	<meta charset="utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title>engine</title>
+
+	<!-- Bootstrap -->
+	<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+	<link href="http://cdn.bootcss.com/layer/3.0.1/skin/moon/style.min.css" rel="stylesheet"/>
+</head>
+
+<th:block xmlns:th="http://www.thymeleaf.org" th:fragment="footer">
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="http://cdn.bootcss.com/layer/3.0.1/layer.min.js"></script>
+</th:block>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  th:object="${demo}">
+
+<body>
+
+<div class="container">
+	<ul class="nav nav-pills">
+		<li role="presentation"  th:text="${demo.id}"></li>
+		<li role="presentation" class="active"   th:text="${demo.name}"></li>
+	</ul>
+</div>
+</body>
+</html>

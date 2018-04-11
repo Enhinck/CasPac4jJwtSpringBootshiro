@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+
+<configuration>
+    <!-- date demo-->
+    <timestamp key="byDay" datePattern="yyyyMMdd" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%-5level [%thread]: %message %logger{30} [%file:%line]%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!-- general fileoutput -->
+    <appender name="FILE"
+              class="ch.qos.logback.core.FileAppender">
+        <file>log/springBootDemo-all-${byDay}.log</file>
+        <encoder>
+            <pattern>%date %level [%thread] %msg %logger{30} [%file:%line]%n
+            </pattern>
+        </encoder>
+    </appender>
+   
+    <logger name="org.hibernate.tool.hbm2ddl" level="INFO" />
+    <!-- root level -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
